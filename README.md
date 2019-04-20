@@ -4,10 +4,10 @@ Template folder to design test driven development of Python functions.
 
 ## Requirements
 
-‘‘‘console
-pip install pytest
-pip install json
-’’’
+```console
+pip3 install pytest
+pip3 install json
+```
 
 ## Functions
 
@@ -19,6 +19,6 @@ pip install json
 
 Run the following command at the root of the folder to see the results of the tests
 
-‘‘‘console
+```console
 py.test -v
-’’’
+```
