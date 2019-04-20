@@ -1,6 +1,5 @@
-import functions
-from functions import *
 import pytest
+from package import functions
 import json
 
 ### Preparation
@@ -21,11 +20,11 @@ function = "test_concatenate"
 arguments, values = get_from_json(dictionary_json,function)
 @pytest.mark.parametrize(arguments, values)
 def test_concatenate(x,y,element,result):
-    assert concatenate(x,y,element) == result
+    assert functions.concatenate(x,y,element) == result
 
 # Test of the test_insertion function
 function = "test_insertion"
 arguments, values = get_from_json(dictionary_json,function)
 @pytest.mark.parametrize(arguments, values)
 def test_insertion(string, element, result):
-    assert insertion(string, element) == result
+    assert functions.insertion(string, element) == result
