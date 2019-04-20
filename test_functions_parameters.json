@@ -1,0 +1,21 @@
+{
+  "test_concatenate": {
+    "arguments": "x, y, element, result",
+    "values": [
+      ["a", "b", "/", "a/b"],
+      ["a", " ", "/", "a "],
+      [" ", "a", "/", " a"],
+      [" ", " ", "/", " "]
+    ]
+  },
+  "test_insertion": {
+    "arguments": "string, element, result",
+    "values": [
+      ["gui", "/", "g/u/i"],
+      ["gui gui", "/", "g/u/i g/u/i"],
+      [" gui gui gui  ", "/", "g/u/i g/u/i g/u/i"],
+      [" gui   gui gui  ", "/", "g/u/i g/u/i g/u/i"],
+      [" gui   gui   gui  ", "/", "g/u/i g/u/i g/u/i"]
+    ]
+  }
+}
