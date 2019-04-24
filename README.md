@@ -1,6 +1,6 @@
-# Test Driven Development Template Folder
+# Pytest Driven Development Template Folder
 
-The current project is designed to provide a simple folder structure template for writing code in Python and testing it using PyTest.
+The current project is designed to provide a simple folder structure template for writing code in Python and testing it using pytest.
 
 The folder provides the following elements :
 - main.py : file at the root of the directory
@@ -10,14 +10,22 @@ The folder provides the following elements :
 
 We provide a simple testing example based on the insertion of characters in a string.
 
-## Requirements
+## Requirements & Setup
+
+Make sure you have the following packages installed.
 
 ```console
 pip3 install pytest
 pip3 install json
 ```
 
-## Usage
+The first time you use the repository, run the following command from the root.
+
+```console
+python3 setup.py develop
+```
+
+## Test Usage
 
 Run the following command in the test folder to see the results of the tests.
 

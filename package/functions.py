@@ -13,3 +13,9 @@ def concatenate(x,y,element):
 def insertion(string,element):
     string_s = string.strip()
     return reduce(lambda x,y : concatenate(x,y,element), list(string_s))
+
+def df_multiplication(df,x,y):
+    df["column_2"] = 2*df["column_2"]
+    x = 2*x
+    y = 2*y
+    return df, x, y

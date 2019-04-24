@@ -1,5 +1,5 @@
 {
-  "test_concatenate": {
+  "concatenate": {
     "arguments": "x, y, element, result",
     "values": [
       ["a", "b", "/", "a/b"],
@@ -8,7 +8,7 @@
       [" ", " ", "/", " "]
     ]
   },
-  "test_insertion": {
+  "insertion": {
     "arguments": "string, element, result",
     "values": [
       ["gui", "/", "g/u/i"],
@@ -16,6 +16,12 @@
       [" gui gui gui  ", "/", "g/u/i g/u/i g/u/i"],
       [" gui   gui gui  ", "/", "g/u/i g/u/i g/u/i"],
       [" gui   gui   gui  ", "/", "g/u/i g/u/i g/u/i"]
+    ]
+  },
+  "df_multiplication": {
+    "arguments": "df, x, y, df_result, x_result, y_result",
+    "values": [
+      ["input_df_multiplication.csv", 1, 2, "input_df_multiplication.csv", 2, 4]
     ]
   }
 }
