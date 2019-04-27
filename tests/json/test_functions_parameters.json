@@ -1,5 +1,5 @@
 {
-  "concatenate": {
+  "function_simple_objects": {
     "arguments": "x, y, element, result",
     "values": [
       ["a", "b", "/", "a/b"],
@@ -8,20 +8,26 @@
       [" ", " ", "/", " "]
     ]
   },
-  "insertion": {
-    "arguments": "string, element, result",
+  "function_dataframe": {
+    "arguments": "df, df_result",
     "values": [
-      ["gui", "/", "g/u/i"],
-      ["gui gui", "/", "g/u/i g/u/i"],
-      [" gui gui gui  ", "/", "g/u/i g/u/i g/u/i"],
-      [" gui   gui gui  ", "/", "g/u/i g/u/i g/u/i"],
-      [" gui   gui   gui  ", "/", "g/u/i g/u/i g/u/i"]
+      ["input_function_dataframe.csv", "output_function_dataframe.csv"]
     ]
   },
-  "df_multiplication": {
-    "arguments": "df, x, y, df_result, x_result, y_result",
+  "function_list": {
+    "arguments": "load_json, case",
     "values": [
-      ["input_df_multiplication.csv", 1, 2, "input_df_multiplication.csv", 2, 4]
+      ["function_list", "case_1"],
+      ["function_list", "case_2"],
+      ["function_list", "case_3"]
+    ]
+  },
+  "function_complex": {
+    "arguments": "df, load_json, case, x, s, df_result, arg_1_result",
+    "values": [
+      ["input_function_complex.csv", "function_complex", "case_1", 2, "column", "output_function_complex.csv", 1],
+      ["input_function_complex.csv", "function_complex", "case_2", 2, "column", "output_function_complex.csv", 11],
+      ["input_function_complex.csv", "function_complex", "case_3", 2, "column", "output_function_complex.csv", 12]
     ]
   }
 }

@@ -1,6 +1,4 @@
-from functools import reduce
-
-def concatenate(x,y,element):
+def function_simple_objects(x,y,element):
     if x[-1] == " " and y == " ":
         return x
     if y == " ":
@@ -10,12 +8,16 @@ def concatenate(x,y,element):
     else :
         return x + element + y
 
-def insertion(string,element):
-    string_s = string.strip()
-    return reduce(lambda x,y : concatenate(x,y,element), list(string_s))
-
-def df_multiplication(df,x,y):
+def function_dataframe(df):
     df["column_2"] = 2*df["column_2"]
-    x = 2*x
-    y = 2*y
-    return df, x, y
+    return df
+
+def function_list(l):
+    l_map = list(map(lambda x: x**2,l))
+    return l_map
+
+def function_complex(df,l,x,s):
+    for column in l :
+        df[column] = df[s] * x
+    arg_1 = df.iloc[0,0]
+    return df, arg_1
