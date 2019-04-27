@@ -1,34 +1,35 @@
 import pytest
-from package import functions
 import json
 import pandas as pd
 import pandas.util.testing as tm
 import inspect
+from package import functions
 
 
 ####### Preparation
-
-# Define fixtures
-
-@pytest.fixture
-def load_json(request):
-    with open("./tests/json/" + request.param + ".json", 'r') as f:
-        dict_json = json.load(f)
-    return dict_json
-
 
 # Load test_functions_parameters.json containing the scenarios for the tests
 
 with open("./tests/json/test_functions_parameters.json", 'r') as f:
     dictionary_json = json.load(f)
 
-# Define some useful functions
+def discover_function(z):
+    function = inspect.getframeinfo(z).function.replace("test_","")
+    method = getattr(functions, function)
+    return function, method
 
-def get_dataframe_from_csv(file):
-    i = pd.read_csv("./tests/csv/input_" + file + ".csv")
-    o = pd.read_csv("./tests/csv/output_" + file + ".csv")
-    return i, o
+def load_json(filename,case):
+    with open("./tests/json/" + filename, 'r') as f:
+        dict = json.load(f)[case]
+        if len(dict) == 1:
+            data = dict[next(iter(dict))]
+        else :
+            data = tuple(dict.values())
+    return data
 
+def load_csv(filename):
+    df = pd.read_csv("./tests/csv/" + filename)
+    return df
 
 ####### Tests
 
@@ -37,7 +38,8 @@ def get_dataframe_from_csv(file):
 
 arguments, values = dictionary_json["function_simple_objects"].values()
 @pytest.mark.parametrize(arguments, values)
-def test_function_simple_objects(x,y,element,result):
+def test_function_simple_objects(x, y, element, result):
+    function, method = discover_function(inspect.currentframe())
 
     '''
         Test function of function_simple_objects. This test is able
@@ -53,9 +55,6 @@ def test_function_simple_objects(x,y,element,result):
             2 - Give the right elements as input and parameters in "test_functions_parameters".
     '''
 
-    function = inspect.getframeinfo(inspect.currentframe()).function.replace("test_","") # Get the name of the current function
-    method = getattr(functions, function)
-
     output = method(x,y,element)
 
     assert output == result
@@ -64,9 +63,9 @@ def test_function_simple_objects(x,y,element,result):
 ### Lists
 
 arguments, values = dictionary_json["function_list"].values()
-@pytest.mark.parametrize(arguments, values, indirect=["load_json"])
-def test_function_list(load_json, case):
-
+@pytest.mark.parametrize(arguments, values)
+def test_function_list(filename, case):
+    function, method = discover_function(inspect.currentframe())
     '''
         Test function of function_list. This test shows an example of how to
         handle a function taking a list as input and outputs.
@@ -77,10 +76,7 @@ def test_function_list(load_json, case):
             3 - Add the right json file in the /json folder to generate your list inputs and outputs.
     '''
 
-    function = inspect.getframeinfo(inspect.currentframe()).function.replace("test_","") # Get the name of the current function
-    method = getattr(functions, function)
-
-    l, l_result = tuple(load_json[case].values())
+    l, l_result = load_json(filename, case)
     l_output = method(l)
 
     assert l_output == l_result
@@ -90,7 +86,8 @@ def test_function_list(load_json, case):
 
 arguments, values = dictionary_json["function_dataframe"].values()
 @pytest.mark.parametrize(arguments, values)
-def test_function_dataframe(df,df_result):
+def test_function_dataframe(df_filename, df_result_filename):
+    function, method = discover_function(inspect.currentframe())
 
     '''
         Test function of function_dataframe. This test shows an
@@ -103,10 +100,7 @@ def test_function_dataframe(df,df_result):
             3 - Add the right csv files in the /csv folder to generate your dataframe inputs and outputs.
     '''
 
-    function = inspect.getframeinfo(inspect.currentframe()).function.replace("test_","") # Get the name of the current function
-    method = getattr(functions, function)
-
-    df, df_result = get_dataframe_from_csv(function)
+    df, df_result = load_csv(df_filename), load_csv(df_filename)
     df_output = method(df)
 
     tm.assert_frame_equal(df_output, df_result)
@@ -115,8 +109,9 @@ def test_function_dataframe(df,df_result):
 ### Global Example (Simple Objects + Lists + Dataframes)
 
 arguments, values = dictionary_json["function_complex"].values()
-@pytest.mark.parametrize(arguments, values, indirect=["load_json"])
-def test_function_complex(df, load_json, case, x, s, df_result, arg_1_result):
+@pytest.mark.parametrize(arguments, values)
+def test_function_complex(df_filename, l_filename, case, x, s, df_result_filename, arg_1_result):
+    function, method = discover_function(inspect.currentframe())
 
     '''
         Test function of function_complex. This test shows an
@@ -127,19 +122,13 @@ def test_function_complex(df, load_json, case, x, s, df_result, arg_1_result):
             1 - Relate it to the right function by replacing the names
             2 - Give the right elements as input and parameters in "test_functions_parameters".
             3 - Add the right csv files in the /csv folder to generate your dataframe inputs and outputs.
-            3 - Add the right json files in the /json folder to generate your list inputs and outputs.
+            4 - Add the right json files in the /json folder to generate your list inputs and outputs.
     '''
 
-    function = inspect.getframeinfo(inspect.currentframe()).function.replace("test_","") # Get the name of the current function
-    method = getattr(functions, function)
-
-    df, df_result = get_dataframe_from_csv(function)
-    l = list(load_json[case].values())[0]
+    df, df_result = load_csv(df_filename), load_csv(df_result_filename)
+    l = load_json(l_filename, case)
 
     df_output, arg_1_output = method(df, l, x, s)
 
     tm.assert_frame_equal(df_output, df_result)
     assert arg_1_output == arg_1_result
-
-
-# Create a case for arrays

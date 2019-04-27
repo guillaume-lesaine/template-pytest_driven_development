@@ -9,25 +9,25 @@
     ]
   },
   "function_dataframe": {
-    "arguments": "df, df_result",
+    "arguments": "df_filename, df_result_filename",
     "values": [
       ["input_function_dataframe.csv", "output_function_dataframe.csv"]
     ]
   },
   "function_list": {
-    "arguments": "load_json, case",
+    "arguments": "filename, case",
     "values": [
-      ["function_list", "case_1"],
-      ["function_list", "case_2"],
-      ["function_list", "case_3"]
+      ["function_list.json", "case_1"],
+      ["function_list.json", "case_2"],
+      ["function_list.json", "case_3"]
     ]
   },
   "function_complex": {
-    "arguments": "df, load_json, case, x, s, df_result, arg_1_result",
+    "arguments": "df_filename, l_filename, case, x, s, df_result_filename, arg_1_result",
     "values": [
-      ["input_function_complex.csv", "function_complex", "case_1", 2, "column", "output_function_complex.csv", 1],
-      ["input_function_complex.csv", "function_complex", "case_2", 2, "column", "output_function_complex.csv", 11],
-      ["input_function_complex.csv", "function_complex", "case_3", 2, "column", "output_function_complex.csv", 12]
+      ["input_function_complex.csv", "function_complex.json", "case_1", 2, "column", "output_function_complex.csv", 1],
+      ["input_function_complex.csv", "function_complex.json", "case_2", 2, "column", "output_function_complex.csv", 11],
+      ["input_function_complex.csv", "function_complex.json", "case_3", 2, "column", "output_function_complex.csv", 12]
     ]
   }
 }

@@ -1,6 +1,10 @@
-# Pytest Driven Development Template Folder
+# template-pytest_driven_development_folder
 
 This project is designed to simplify testing with python and pytests. We provide a simple folder structure template for writing code and testing it. We give a few examples showing how to industrialize and simplify testing functions taking common python objects as inputs and outputs, such as integer, strings, lists, as well as pandas dataframes and series.
+
+<p align="center">
+  <img src="folder_structure.png" width="75%"/>
+</p>
 
 The folder provides the following elements that can be customized depending on your needs :
 - main.py : file at the root of the directory
@@ -10,11 +14,6 @@ The folder provides the following elements that can be customized depending on y
 - .json files : files providing inputs and outputs for testing functions with lists as inputs. When used, these files are mentionned in test_functions.json.
 - .csv files : files providing inputs and outputs for testing functions with pandas dataframe or series as inputs. When used, these files are mentionned in test_functions.json.
 - setup.py : file to run the first time the directory is used, see **Requirements & Setup** below.
-
-
-<div>
-<img src="folder_structure.png" width="100%">
-</div>
 
 ## Requirements & Setup
 
