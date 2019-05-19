@@ -1,1 +1,1 @@
-from package import functions
+import package as pkg

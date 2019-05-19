@@ -2,34 +2,15 @@ import pytest
 import json
 import pandas as pd
 import pandas.util.testing as tm
-import inspect
-from package import functions
 
+from conftest import package
+from conftest import load_json, load_csv
 
 ####### Preparation
 
 # Load test_functions_parameters.json containing the scenarios for the tests
+dictionary_json = load_json("test_functions_parameters.json")
 
-with open("./tests/json/test_functions_parameters.json", 'r') as f:
-    dictionary_json = json.load(f)
-
-def discover_function(z):
-    function = inspect.getframeinfo(z).function.replace("test_","")
-    method = getattr(functions, function)
-    return function, method
-
-def load_json(filename,case):
-    with open("./tests/json/" + filename, 'r') as f:
-        dict = json.load(f)[case]
-        if len(dict) == 1:
-            data = dict[next(iter(dict))]
-        else :
-            data = tuple(dict.values())
-    return data
-
-def load_csv(filename):
-    df = pd.read_csv("./tests/csv/" + filename)
-    return df
 
 ####### Tests
 
@@ -39,8 +20,6 @@ def load_csv(filename):
 arguments, values = dictionary_json["function_simple_objects"].values()
 @pytest.mark.parametrize(arguments, values)
 def test_function_simple_objects(x, y, element, result):
-    function, method = discover_function(inspect.currentframe())
-
     '''
         Test function of function_simple_objects. This test is able
         to handle any function taking any number of the following
@@ -55,7 +34,7 @@ def test_function_simple_objects(x, y, element, result):
             2 - Give the right elements as input and parameters in "test_functions_parameters".
     '''
 
-    output = method(x,y,element)
+    output = package.function_simple_objects(x,y,element)
 
     assert output == result
 
@@ -65,7 +44,6 @@ def test_function_simple_objects(x, y, element, result):
 arguments, values = dictionary_json["function_list"].values()
 @pytest.mark.parametrize(arguments, values)
 def test_function_list(filename, case):
-    function, method = discover_function(inspect.currentframe())
     '''
         Test function of function_list. This test shows an example of how to
         handle a function taking a list as input and outputs.
@@ -77,7 +55,7 @@ def test_function_list(filename, case):
     '''
 
     l, l_result = load_json(filename, case)
-    l_output = method(l)
+    l_output = package.function_list(l)
 
     assert l_output == l_result
 
@@ -87,8 +65,6 @@ def test_function_list(filename, case):
 arguments, values = dictionary_json["function_dataframe"].values()
 @pytest.mark.parametrize(arguments, values)
 def test_function_dataframe(df_filename, df_result_filename):
-    function, method = discover_function(inspect.currentframe())
-
     '''
         Test function of function_dataframe. This test shows an
         example of how to handle a function taking a pandas dataframe as input
@@ -101,7 +77,7 @@ def test_function_dataframe(df_filename, df_result_filename):
     '''
 
     df, df_result = load_csv(df_filename), load_csv(df_filename)
-    df_output = method(df)
+    df_output = package.function_dataframe(df)
 
     tm.assert_frame_equal(df_output, df_result)
 
@@ -111,8 +87,6 @@ def test_function_dataframe(df_filename, df_result_filename):
 arguments, values = dictionary_json["function_complex"].values()
 @pytest.mark.parametrize(arguments, values)
 def test_function_complex(df_filename, l_filename, case, x, s, df_result_filename, arg_1_result):
-    function, method = discover_function(inspect.currentframe())
-
     '''
         Test function of function_complex. This test shows an
         example of how to handle a complex combination of inputs and outpus.
@@ -128,7 +102,7 @@ def test_function_complex(df_filename, l_filename, case, x, s, df_result_filenam
     df, df_result = load_csv(df_filename), load_csv(df_result_filename)
     l = load_json(l_filename, case)
 
-    df_output, arg_1_output = method(df, l, x, s)
+    df_output, arg_1_output = package.function_complex(df, l, x, s)
 
     tm.assert_frame_equal(df_output, df_result)
     assert arg_1_output == arg_1_result
